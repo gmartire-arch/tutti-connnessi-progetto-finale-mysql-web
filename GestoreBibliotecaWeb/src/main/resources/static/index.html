@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>📚 Dashboard Biblioteca</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="app-container">
+        <aside class="sidebar">
+            <div class="brand">
+                <i class="fa-solid fa-book-bookmark"></i>
+                <h2>BiblioGest</h2>
+            </div>
+            <nav class="menu">
+                <a href="#" class="menu-item active" data-target="view-catalogo"><i class="fa-solid fa-list"></i> Catalogo</a>
+                <a href="#" class="menu-item" data-target="view-aggiungi"><i class="fa-solid fa-plus"></i> Inserisci Risorsa</a>
+                <a href="#" class="menu-item" data-target="view-prestiti"><i class="fa-solid fa-hand-holding-hand"></i> Prestiti e Resi</a>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <header>
+                <h1>Gestione Biblioteca</h1>
+                <div id="alert-box" class="alert hidden"></div>
+            </header>
+
+            <section id="view-catalogo" class="content-section">
+                <div class="section-header">
+                    <h3><i class="fa-solid fa-layer-group"></i> Risorse in Biblioteca</h3>
+                    <button id="btn-refresh" class="btn btn-secondary"><i class="fa-solid fa-rotate"></i> Aggiorna</button>
+                </div>
+                <div class="table-container">
+                    <table id="tabella-catalogo">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Tipo</th>
+                                <th>Titolo</th>
+                                <th>Autore / Regista - Durata</th>
+                                <th>Stato</th>
+                                <th>Azioni</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section id="view-aggiungi" class="content-section hidden">
+                <h3><i class="fa-solid fa-square-plus"></i> Aggiungi Nuova Risorsa</h3>
+                <form id="form-aggiungi" class="card-form">
+                    <div class="form-group">
+                        <label for="tipo-risorsa">Tipo Risorsa</label>
+                        <select id="tipo-risorsa" required>
+                            <option value="LIBRO">Libro</option>
+                            <option value="DVD">DVD</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="titolo">Titolo</label>
+                        <input type="text" id="titolo" placeholder="Inserisci il titolo..." required>
+                    </div>
+					<span id = "form-group-libro">
+                    <div class="form-group" id="group-autore">
+                        <label for="autore">Autore</label>
+                        <input type="text" id="autore" placeholder="Inserisci l'autore...">
+                    </div>
+					</span>
+					<span id = "form-group-dvd" style="display: none;">
+					<div class="form-group" id="group-autore">
+					    <label for="regista">Regista</label>
+					    <input type="text" id="regista" placeholder="Inserisci il regista...">
+					</div>
+					<div class="form-group" id="group-autore">
+					    <label for="durata">Durata</label>
+					    <input type="number" id="durata" placeholder="Inserisci la durata...">
+					</div>
+					</span>
+					<button type="submit" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i> Salva nel Database</button>
+                </form>
+            </section>
+
+            <section id="view-prestiti" class="content-section hidden">
+                <h3><i class="fa-solid fa-right-left"></i> Movimentazione Rapida (Tramite ID)</h3>
+                <div class="grid-2-col">
+                    <div class="card-form">
+                        <h4><i class="fa-solid fa-arrow-up-from-bracket text-danger"></i> Registra Prestito</h4>
+                        <div class="form-group">
+                            <input type="number" id="id-prestito" placeholder="ID Risorsa" min="1">
+                        </div>
+                        <button id="btn-prestito" class="btn btn-danger">Effettua Prestito</button>
+                    </div>
+                    <div class="card-form">
+                        <h4><i class="fa-solid fa-arrow-down-to-bracket text-success"></i> Registra Restituzione</h4>
+                        <div class="form-group">
+                            <input type="number" id="id-restituzione" placeholder="ID Risorsa" min="1">
+                        </div>
+                        <button id="btn-restituzione" class="btn btn-success">Effettua Restituzione</button>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <div id="modal-modifica" class="modal hidden">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h3><i class="fa-solid fa-pen-to-square"></i> Modifica Risorsa</h3>
+            <form id="form-modifica">
+                <input type="hidden" id="modifica-id">
+                <input type="hidden" id="modifica-tipo">
+                <div class="form-group">
+                    <label>Titolo attuale/nuovo</label>
+                    <input type="text" id="modifica-titolo" required>
+                </div>
+                <div class="form-group" id="group-modifica-specifico">
+                    <label id="label-modifica-specifico">Autore / Regista</label>
+                    <input type="text" id="modifica-specifico">
+                </div>
+                <div class="form-group id-dvd-only hidden">
+                    <label>Casa Discografica</label>
+                    <input type="text" id="modifica-casa-disc">
+                </div>
+                <button type="submit" class="btn btn-primary">Salva Modifiche</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
